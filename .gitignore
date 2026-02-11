@@ -36,3 +36,7 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+.env
+
+# ignore python scripts folder
+/python_scripts
