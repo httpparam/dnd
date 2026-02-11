@@ -1,24 +1,24 @@
-# README
+# campaign manager
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+a dnd campaign manager with magic link login.
 
-Things you may want to cover:
+## setup
 
-* Ruby version
+```bash
+bundle install
+rails db:migrate
+```
 
-* System dependencies
+## run
 
-* Configuration
+```bash
+rails server
+```
 
-* Database creation
+go to localhost:3000
 
-* Database initialization
+## login
 
-* How to run the test suite
+enter your email, click the button. a new tab opens with your login link. click it and you're in.
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+links expire in 15 minutes.
