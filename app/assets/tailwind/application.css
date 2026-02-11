@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'ComicRunes';
+  src: url('/ComicRunes.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-parchment: #F4F1DE;
+  --color-ink: #2B2D42;
+  --color-magic-teal: #006D77;
+
+  --font-hand: "Patrick Hand", cursive;
+  --font-runes: "ComicRunes", serif;
+}

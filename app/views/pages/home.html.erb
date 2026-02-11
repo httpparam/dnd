@@ -1,0 +1,115 @@
+<style>
+  .pixel-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    font-family: "Patrick Hand", cursive;
+    color: #2B2D42;
+    font-size: 1.1em;
+    width: 20em;
+  }
+
+  .pixel-label {
+    text-shadow: 1px 1px #F4F1DE;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    color: #2B2D42;
+  }
+
+  .pixel-input {
+    appearance: none;
+    border: none;
+    padding: 0.8em 1em;
+    font-size: 1.1em;
+    font-family: "Patrick Hand", cursive;
+    color: #2B2D42;
+    background: #F4F1DE;
+    image-rendering: pixelated;
+    box-shadow:
+      0 0 0 0.15em #2B2D42,
+      0 0 0 0.3em #006D77,
+      0 0 0 0.45em #2B2D42,
+      0 0.3em 0 0 #d4c9a0,
+      0 0.3em 0 0.15em #2B2D42;
+    outline: none;
+    transition: all 0.15s steps(1);
+  }
+
+  .pixel-input::placeholder {
+    color: #2B2D42;
+    opacity: 0.5;
+  }
+
+  .pixel-input:focus {
+    background: #fff;
+    box-shadow:
+      0 0 0 0.15em #2B2D42,
+      0 0 0 0.3em #006D77,
+      0 0 0 0.45em #2B2D42,
+      0 0.2em 0 0 #2B2D42,
+      0 0.2em 0 0.15em #006D77;
+  }
+
+  .pixel-input:hover {
+    animation: glitch-input 0.3s steps(2) infinite;
+  }
+
+  .pixel-button {
+    appearance: none;
+    border: none;
+    padding: 0.8em 2em;
+    font-size: 1.2em;
+    font-family: "Patrick Hand", cursive;
+    color: #F4F1DE;
+    background: #006D77;
+    image-rendering: pixelated;
+    box-shadow:
+      0 0 0 0.15em #2B2D42,
+      0 0 0 0.3em #F4F1DE,
+      0 0 0 0.45em #2B2D42,
+      0 0.3em 0 0 #004d55,
+      0 0.3em 0 0.15em #2B2D42;
+    outline: none;
+    transition: all 0.15s steps(1);
+    cursor: pointer;
+  }
+
+  .pixel-button:hover {
+    background: #008a96;
+    animation: glitch-input 0.3s steps(2) infinite;
+  }
+
+  .pixel-button:active {
+    box-shadow:
+      0 0 0 0.15em #2B2D42,
+      0 0 0 0.3em #F4F1DE,
+      0 0 0 0.45em #2B2D42,
+      0 0.1em 0 0 #004d55,
+      0 0.1em 0 0.15em #2B2D42;
+    transform: translateY(0.2em);
+  }
+
+  @keyframes glitch-input {
+    0% { transform: translate(0); }
+    25% { transform: translate(-1px, 1px); }
+    50% { transform: translate(1px, -1px); }
+    75% { transform: translate(-1px, -1px); }
+    100% { transform: translate(0); }
+  }
+</style>
+
+<div class="email-signup-container" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 50;">
+  <div id="email-icon" style="margin-bottom: 25px; text-align: center;"></div>
+  <form style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
+    <div class="pixel-input-wrapper">
+      <label class="pixel-label">Enter your email</label>
+      <input type="email" class="pixel-input" placeholder="adventurer@dnd.com" />
+    </div>
+    <button type="submit" class="pixel-button">Sign In</button>
+  </form>
+</div>
+
+<script type="module">
+  import { icon } from '@hackclub/icons';
+  document.getElementById('email-icon').innerHTML = icon('email', { size: 56 });
+</script>
