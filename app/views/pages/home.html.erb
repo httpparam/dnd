@@ -99,7 +99,6 @@
 </style>
 
 <div class="email-signup-container" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 50;">
-  <div id="email-icon" style="margin-bottom: 25px; text-align: center;"></div>
   <form style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
     <div class="pixel-input-wrapper">
       <label class="pixel-label">Enter your email</label>
@@ -108,8 +107,3 @@
     <button type="submit" class="pixel-button">Sign In</button>
   </form>
 </div>
-
-<script type="module">
-  import { icon } from '@hackclub/icons';
-  document.getElementById('email-icon').innerHTML = icon('email', { size: 56 });
-</script>
