@@ -51,6 +51,16 @@
       }
     </style>
 
+    <%= render "shared/flash" %>
+
+    <% if logged_in? %>
+      <div style="position: fixed; top: 20px; right: 20px; z-index: 100;">
+        <%= button_to "Logout", session_path, method: :delete,
+            style: "background: #E07A5F; color: #F4F1DE; border: none; padding: 10px 20px; border-radius: 5px; font-family: 'Patrick Hand', cursive; font-size: 1em; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);",
+            form: { style: "display: inline;" } %>
+      </div>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>

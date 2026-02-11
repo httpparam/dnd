@@ -99,11 +99,13 @@
 </style>
 
 <div class="email-signup-container" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 50;">
-  <form style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
-    <div class="pixel-input-wrapper">
-      <label class="pixel-label">Enter your email</label>
-      <input type="email" class="pixel-input" placeholder="adventurer@dnd.com" />
+  <%= form_with url: session_path, method: :post, local: true do %>
+    <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
+      <div class="pixel-input-wrapper">
+        <label class="pixel-label" for="email">Enter your email</label>
+        <input type="email" name="email" id="email" class="pixel-input" placeholder="adventurer@dnd.com" required />
+      </div>
+      <button type="submit" class="pixel-button">Sign In</button>
     </div>
-    <button type="submit" class="pixel-button">Sign In</button>
-  </form>
+  <% end %>
 </div>
