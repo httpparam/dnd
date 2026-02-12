@@ -62,7 +62,7 @@ group :development do
   gem "letter_opener"
 
   # Load env vars from .env
-  gem "dotenv", require: "dotenv/rails-now"
+  gem "dotenv", require: "dotenv/load"
 end
 
 group :test do
