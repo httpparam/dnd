@@ -10,12 +10,12 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Authentication routes
-  resource :session, only: [ :new, :create, :destroy ]
-  get "login/:token", to: "sessions#show", as: :login
+  resource :session, only: [ :destroy ]
+  get "auth/hackclub", to: "hackclub_auth#authorize", as: :hackclub_auth
+  get "oauth/callback", to: "hackclub_auth#callback", as: :hackclub_callback
 
   # Dashboard route (protected)
   get "dashboard", to: "dashboard#index"
-  patch "profile", to: "users#update_profile"
 
   # Defines the root path route ("/")
   root "pages#home"

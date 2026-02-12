@@ -1,59 +1,4 @@
 <style>
-  .pixel-input-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-    font-family: "Patrick Hand", cursive;
-    color: #2B2D42;
-    font-size: 1.1em;
-    width: 20em;
-  }
-
-  .pixel-label {
-    text-shadow: 1px 1px #F4F1DE;
-    font-weight: bold;
-    letter-spacing: 0.05em;
-    color: #2B2D42;
-  }
-
-  .pixel-input {
-    appearance: none;
-    border: none;
-    padding: 0.8em 1em;
-    font-size: 1.1em;
-    font-family: "Patrick Hand", cursive;
-    color: #2B2D42;
-    background: #F4F1DE;
-    image-rendering: pixelated;
-    box-shadow:
-      0 0 0 0.15em #2B2D42,
-      0 0 0 0.3em #006D77,
-      0 0 0 0.45em #2B2D42,
-      0 0.3em 0 0 #d4c9a0,
-      0 0.3em 0 0.15em #2B2D42;
-    outline: none;
-    transition: all 0.15s steps(1);
-  }
-
-  .pixel-input::placeholder {
-    color: #2B2D42;
-    opacity: 0.5;
-  }
-
-  .pixel-input:focus {
-    background: #fff;
-    box-shadow:
-      0 0 0 0.15em #2B2D42,
-      0 0 0 0.3em #006D77,
-      0 0 0 0.45em #2B2D42,
-      0 0.2em 0 0 #2B2D42,
-      0 0.2em 0 0.15em #006D77;
-  }
-
-  .pixel-input:hover {
-    animation: glitch-input 0.3s steps(2) infinite;
-  }
-
   .pixel-button {
     appearance: none;
     border: none;
@@ -61,13 +6,13 @@
     font-size: 1.2em;
     font-family: "Patrick Hand", cursive;
     color: #F4F1DE;
-    background: #006D77;
+    background: #E07A5F;
     image-rendering: pixelated;
     box-shadow:
       0 0 0 0.15em #2B2D42,
       0 0 0 0.3em #F4F1DE,
       0 0 0 0.45em #2B2D42,
-      0 0.3em 0 0 #004d55,
+      0 0.3em 0 0 #a64d3f,
       0 0.3em 0 0.15em #2B2D42;
     outline: none;
     transition: all 0.15s steps(1);
@@ -75,7 +20,7 @@
   }
 
   .pixel-button:hover {
-    background: #008a96;
+    background: #E07A5F;
     animation: glitch-input 0.3s steps(2) infinite;
   }
 
@@ -98,14 +43,13 @@
   }
 </style>
 
-<div class="email-signup-container" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 50;">
-  <%= form_with url: session_path, method: :post, local: true do %>
-    <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
-      <div class="pixel-input-wrapper">
-        <label class="pixel-label" for="email">Enter your email</label>
-        <input type="email" name="email" id="email" class="pixel-input" placeholder="adventurer@dnd.com" required />
-      </div>
-      <button type="submit" class="pixel-button">Sign In</button>
-    </div>
+<div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 50; display: flex; flex-direction: column; align-items: center; gap: 40px;">
+  <div style="display: flex; align-items: center; gap: 15px;">
+    <div class="logo-spin" style="background: url('/logo.png') center/contain no-repeat; height: 150px; width: 150px;"></div>
+    <span class="comic-font font-runes" style="font-size: 64px; color: #006D77; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Campaign Manager</span>
+  </div>
+
+  <%= link_to hackclub_auth_path, style: "text-decoration: none;" do %>
+    <button type="button" class="pixel-button">Continue with Hack Club</button>
   <% end %>
 </div>

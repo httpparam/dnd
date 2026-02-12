@@ -70,4 +70,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+# HTTP client for API requests
+gem "http"
 gem "tailwindcss-rails"

@@ -33,17 +33,22 @@
 
   <body style="margin: 0; padding: 0; background: url('/bg.png') center/cover no-repeat fixed; min-height: 100vh;" oncontextmenu="return false;">
 
-    <div style="position: fixed; top: 20px; left: 20px; display: flex; align-items: center; gap: 15px; z-index: 100;">
-      <div class="logo-spin" style="background: url('/logo.png') center/contain no-repeat; height: 150px; width: 150px;" oncontextmenu="return false;"></div>
-      <span class="comic-font font-runes" style="font-size: 64px; color: #006D77; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); letter-spacing: 2px;">Campaign Manager</span>
-    </div>
+    <% unless request.path == root_path %>
+      <div style="position: fixed; top: 20px; left: 20px; display: flex; align-items: center; gap: 15px; z-index: 100;">
+        <div class="logo-spin" style="background: url('/logo.png') center/contain no-repeat; height: 150px; width: 150px;" oncontextmenu="return false;"></div>
+        <span class="comic-font font-runes" style="font-size: 64px; color: #006D77; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); letter-spacing: 2px;">Campaign Manager</span>
+
+        <% if current_user&.full_name&.present? %>
+          <div style="position: fixed; bottom: 20px; left: 20px; font-family: 'Patrick Hand', cursive; font-size: 0.9em; color: #2B2D42;">
+            adventuring as <%= current_user.full_name.split(' ').first %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
 
     <style>
       .logo-spin {
-        transition: transform 0.3s ease;
-      }
-      .logo-spin:hover {
-        animation: spin 2s linear infinite;
+        animation: spin 8s linear infinite;
       }
       @keyframes spin {
         from { transform: rotate(0deg); }
