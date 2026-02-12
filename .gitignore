@@ -40,3 +40,6 @@
 
 # ignore python scripts folder
 /python_scripts
+
+# ignore docs
+/docs
