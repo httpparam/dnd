@@ -1,11 +1,35 @@
 <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 50;">
-  <div style="background: rgba(244, 241, 222, 0.9); padding: 40px; border-radius: 10px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); font-family: 'Patrick Hand', cursive;">
-    <h1 style="font-size: 2.5em; color: #006D77; margin: 0 0 20px 0; text-align: center;">Welcome, Adventurer!</h1>
-    <p style="font-size: 1.3em; color: #2B2D42; text-align: center;">
-      You are now signed in as <strong><%= @user.email %></strong>
-    </p>
-    <p style="font-size: 1.1em; color: #2B2D42; text-align: center; margin-top: 30px;">
-      Your campaign management dashboard awaits...
-    </p>
+  <div style="background: rgba(244, 241, 222, 0.9); padding: 40px; border-radius: 10px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); font-family: 'Patrick Hand', cursive; max-width: 400px; width: 100%;">
+    <% unless current_user.full_name.present? %>
+      <h2 style="font-size: 1.8em; color: #006D77; margin: 0 0 20px 0; text-align: center;">who adventures here?</h2>
+      <p style="font-size: 1.1em; color: #2B2D42; text-align: center; margin-bottom: 20px;">before we find you a campaign, tell us a bit about yourself.</p>
+
+      <form action="<%= profile_path %>" method="post" accept-charset="utf-8" style="display: flex; flex-direction: column; gap: 15px;">
+        <input type="hidden" name="_method" value="patch">
+        <%= csrf_meta_tags %>
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+        <div>
+          <label style="color: #2B2D42; font-weight: bold;">your name</label>
+          <input type="text" name="user[full_name]" placeholder="e.g. aragorn" required
+            style="width: 100%; padding: 12px; font-family: 'Patrick Hand', cursive; font-size: 1.1em; border: 2px solid #2B2D42; border-radius: 5px; background: #F4F1DE; box-sizing: border-box;" />
+        </div>
+
+        <div>
+          <label style="color: #2B2D42; font-weight: bold;">nickname (optional)</label>
+          <input type="text" name="user[display_name]" placeholder="how friends call you" maxlength="30"
+            style="width: 100%; padding: 12px; font-family: 'Patrick Hand', cursive; font-size: 1.1em; border: 2px solid #2B2D42; border-radius: 5px; background: #F4F1DE; box-sizing: border-box;" />
+        </div>
+
+        <button type="submit" style="background: #006D77; color: #F4F1DE; border: none; padding: 12px 24px; border-radius: 5px; font-family: 'Patrick Hand', cursive; font-size: 1.2em; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); margin-top: 10px;">
+          continue
+        </button>
+      </form>
+    <% end %>
+
+    <% if current_user.full_name.present? %>
+      <h2 style="font-size: 1.8em; color: #006D77; margin: 0 0 20px 0; text-align: center;">welcome back, <%= current_user.display_name.presence || current_user.full_name.split(' ').first %>!</h2>
+      <p style="font-size: 1.1em; color: #2B2D42; text-align: center;">your campaign dashboard awaits...</p>
+    <% end %>
   </div>
 </div>

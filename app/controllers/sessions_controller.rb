@@ -39,6 +39,11 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
+    redirect_to root_path, status: :see_other
+  end
+
+  def destroy
+    session[:user_id] = nil
     redirect_to root_path, notice: "You have been logged out. Until next time!"
   end
 end

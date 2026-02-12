@@ -1,26 +1,13 @@
 # campaign manager
 
-a dnd campaign manager with magic link login.
+a dnd campaign manager matching dungeon masters with players.
 
 ## setup
 
-copy env vars:
 ```bash
 cp .env.example .env
-```
-
-start postgres:
-```bash
 docker compose up -d
-```
-
-install gems:
-```bash
 bundle install
-```
-
-setup db:
-```bash
 rails db:migrate
 ```
 
@@ -30,10 +17,12 @@ rails db:migrate
 rails server
 ```
 
-go to localhost:3000
-
 ## login
 
-enter your email, click the button. a new tab opens with your login link. click it and you're in.
+enter your email. click the button. a new tab opens with your login link.
 
 links expire in 15 minutes.
+
+## docs
+
+see [prd.md](docs/prd.md) for full product spec.

@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user, :logged_in?
 
+  before_action :redirect_logged_in_to_dashboard
+
   private
 
   def current_user
@@ -20,6 +22,12 @@ class ApplicationController < ActionController::Base
   def require_login
     unless logged_in?
       redirect_to root_path, alert: "Please sign in to continue."
+    end
+  end
+
+  def redirect_logged_in_to_dashboard
+    if logged_in? && request.path == root_path
+      redirect_to dashboard_path
     end
   end
 end

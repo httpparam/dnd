@@ -4,6 +4,8 @@ class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
   validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL_REGEX }
+  validates :full_name, presence: true, on: :update_profile
+  validates :display_name, length: { maximum: 30 }
 
   # Generates a new login token that expires in 15 minutes
   def generate_login_token!

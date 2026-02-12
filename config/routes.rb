@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   # Dashboard route (protected)
   get "dashboard", to: "dashboard#index"
+  patch "profile", to: "users#update_profile"
 
   # Defines the root path route ("/")
   root "pages#home"
