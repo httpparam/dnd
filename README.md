@@ -37,13 +37,3 @@ go to localhost:3000
 enter your email, click the button. a new tab opens with your login link. click it and you're in.
 
 links expire in 15 minutes.
-
-## export db to csv
-
-```bash
-cd python_scripts
-pip install -r requirements.txt
-python export_to_csv.py
-```
-
-this exports all tables to csv files in the current directory.
