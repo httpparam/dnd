@@ -34,3 +34,19 @@ body {
 /* Import shared animations */
 @import 'animations';
 
+/* Button hover effects */
+button:hover,
+input[type="submit"]:hover,
+button_to:hover form button:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+  transition: all 0.15s ease-out;
+}
+
+button:active,
+input[type="submit"]:active,
+button_to:active form button:active {
+  transform: translateY(1px);
+  filter: brightness(0.95);
+}
+

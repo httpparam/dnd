@@ -1,5 +1,5 @@
 <% if notice %>
-  <div data-controller="flash" data-turbo-temporary="true" style="position: fixed; top: 80px; right: 20px; z-index: 1000; animation: slideIn 0.3s ease-out forwards; transform: translateX(100%);">
+  <div data-controller="flash" data-turbo-temporary="true" style="position: fixed; bottom: 20px; left: 20px; z-index: 1000; animation: slideIn 0.3s ease-out forwards;">
     <div style="background: #006D77; color: #F4F1DE; padding: 15px 20px; border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); font-family: 'Patrick Hand', cursive; font-size: 1.1em;">
       <%= notice %>
     </div>
@@ -7,7 +7,7 @@
 <% end %>
 
 <% if alert %>
-  <div data-controller="flash" data-turbo-temporary="true" style="position: fixed; top: 80px; right: 20px; z-index: 1000; animation: slideIn 0.3s ease-out forwards; transform: translateX(100%);">
+  <div data-controller="flash" data-turbo-temporary="true" style="position: fixed; bottom: 20px; left: 20px; z-index: 1000; animation: slideIn 0.3s ease-out forwards;">
     <div style="background: #E07A5F; color: #F4F1DE; padding: 15px 20px; border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); font-family: 'Patrick Hand', cursive; font-size: 1.1em;">
       <%= alert %>
     </div>

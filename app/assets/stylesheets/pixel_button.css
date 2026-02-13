@@ -1,0 +1,104 @@
+/*
+ * Uiverse Pixel Input/Button Styles
+ * Based on https://uiverse.io/components/xbeat_5120/pixelated-input-field
+ * Adapted for the DnD Campaign Manager color scheme
+ */
+
+.uiverse-pixel-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  font-family: "Courier New", monospace;
+  color: #F4F1DE;
+  font-size: 1em;
+  width: 18em;
+  appearance: none;
+  border: none;
+  padding: 0.6em;
+  background: #E07A5F;
+  image-rendering: pixelated;
+  box-shadow:
+    0 0 0 0.15em #2B2D42,
+    0 0 0 0.3em #F4F1DE,
+    0 0 0 0.45em #2B2D42,
+    0 0 0 0.3em 0 0 #a64d3f,
+    0 0 0.3em 0 0 0.15em #2B2D42;
+  outline: none;
+  transition: all 0.15s steps(1);
+  cursor: pointer;
+  text-shadow: 1px 1px 0 #2B2D42;
+}
+
+.uiverse-pixel-label {
+  text-shadow: 1px 1px 0 #000;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.uiverse-pixel-input {
+  appearance: none;
+  border: none;
+  padding: 0.6em;
+  font-size: 1em;
+  font-family: "Courier New", monospace;
+  color: #F4F1DE;
+  background: #006D77;
+  image-rendering: pixelated;
+  box-shadow:
+    0 0 0 0.15em #2B2D42,
+    0 0 0 0.3em #F4F1DE,
+    0 0 0 0.45em #2B2D42,
+    0 0 0 0.3em #2B2D42,
+    0 0 0.2em 0 0 #00cc66,
+    0 0 0.3em 0 0 0.15em #2B2D42;
+  outline: none;
+  transition: all 0.15s steps(1);
+  text-shadow: 1px 1px 0 #000;
+}
+
+.uiverse-pixel-input::placeholder {
+  color: #F4F1DE;
+  opacity: 0.6;
+}
+
+.uiverse-pixel-input:focus {
+  background: #008C77;
+  box-shadow:
+    0 0 0 0.15em #2B2D42,
+    0 0 0 0.3em #F4F1DE,
+    0 0 0 0.45em #2B2D42,
+    0 0 0 0.2em 0 0 #00cc66,
+    0 0 0.3em 0 0 0.15em #2B2D42;
+}
+
+.uiverse-pixel-input-wrapper:hover {
+  animation: uiverse-glitch-input 0.3s steps(2) infinite;
+}
+
+/* Glitch animation */
+@keyframes uiverse-glitch-input {
+  0% {
+    transform: translate(0);
+  }
+  25% {
+    transform: translate(-1px, 1px);
+  }
+  50% {
+    transform: translate(1px, -1px);
+  }
+  75% {
+    transform: translate(-1px, -1px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+.uiverse-pixel-input-wrapper.uiverse-focused {
+  box-shadow:
+    0 0 0 0.15em #2B2D42,
+    0 0 0 0.3em #F4F1DE,
+    0 0 0 0.45em #2B2D42,
+    0 0 0 0.3em 0 0 #a64d3f,
+    0 0 0 0.3em 0 0 0.15em #2B2D42;
+}
