@@ -23,6 +23,3 @@ enter your email. click the button. a new tab opens with your login link.
 
 links expire in 15 minutes.
 
-## docs
-
-see [prd.md](docs/prd.md) for full product spec.
