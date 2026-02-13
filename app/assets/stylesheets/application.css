@@ -30,3 +30,7 @@ body {
 .comic-font {
   font-family: 'Acadian Runes', cursive;
 }
+
+/* Import shared animations */
+@import 'animations';
+

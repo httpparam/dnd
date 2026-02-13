@@ -34,19 +34,12 @@
   <body style="margin: 0; padding: 0; background: url('/bg.png') center/cover no-repeat fixed; min-height: 100vh;" oncontextmenu="return false;">
 
     <% unless request.path == root_path %>
-      <div style="position: fixed; top: 20px; left: 20px; display: flex; align-items: center; gap: 15px; z-index: 100;">
-        <div class="logo-spin" style="background: url('/logo.png') center/contain no-repeat; height: 150px; width: 150px;" oncontextmenu="return false;"></div>
-        <span class="comic-font font-runes" style="font-size: 64px; color: #006D77; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); letter-spacing: 2px;">Campaign Manager</span>
-      </div>
+      <%= render "shared/logo" %>
     <% end %>
 
     <style>
       .logo-spin {
         animation: spin 8s linear infinite;
-      }
-      @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
       }
     </style>
 
@@ -55,6 +48,7 @@
     <% if logged_in? %>
       <div style="position: fixed; top: 20px; right: 20px; z-index: 100;">
         <%= button_to "Logout", session_path, method: :delete,
+            data: { turbo_frame: "top" },
             style: "background: #E07A5F; color: #F4F1DE; border: none; padding: 10px 20px; border-radius: 5px; font-family: 'Patrick Hand', cursive; font-size: 1em; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);",
             form: { style: "display: inline;" } %>
       </div>

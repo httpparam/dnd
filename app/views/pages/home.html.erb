@@ -12,8 +12,8 @@
       0 0 0 0.15em #2B2D42,
       0 0 0 0.3em #F4F1DE,
       0 0 0 0.45em #2B2D42,
-      0 0.3em 0 0 #a64d3f,
-      0 0.3em 0 0.15em #2B2D42;
+      0 0 0.3em 0 0 #a64d3f,
+      0 0 0.3em 0 0.15em #2B2D42;
     outline: none;
     transition: all 0.15s steps(1);
     cursor: pointer;
@@ -29,25 +29,18 @@
       0 0 0 0.15em #2B2D42,
       0 0 0 0.3em #F4F1DE,
       0 0 0 0.45em #2B2D42,
-      0 0.1em 0 0 #004d55,
-      0 0.1em 0 0.15em #2B2D42;
+      0 0 0.1em 0 0 #004d55,
+      0 0 0.1em 0 0.15em #2B2D42;
     transform: translateY(0.2em);
   }
 
-  @keyframes glitch-input {
-    0% { transform: translate(0); }
-    25% { transform: translate(-1px, 1px); }
-    50% { transform: translate(1px, -1px); }
-    75% { transform: translate(-1px, -1px); }
-    100% { transform: translate(0); }
+  .logo-spin {
+    animation: spin 8s linear infinite;
   }
 </style>
 
-<div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 50; display: flex; flex-direction: column; align-items: center; gap: 40px;">
-  <div style="display: flex; align-items: center; gap: 15px;">
-    <div class="logo-spin" style="background: url('/logo.png') center/contain no-repeat; height: 150px; width: 150px;"></div>
-    <span class="comic-font font-runes" style="font-size: 64px; color: #006D77; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Campaign Manager</span>
-  </div>
+    <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 50; display: flex; flex-direction: column; align-items: center; gap: 40px;">
+  <%= render "shared/logo" %>
 
   <%= link_to hackclub_auth_path, style: "text-decoration: none;" do %>
     <button type="button" class="pixel-button">Continue with Hack Club</button>

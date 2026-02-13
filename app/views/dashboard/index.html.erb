@@ -1,6 +1,48 @@
+<%#
+# Dashboard - Main user dashboard
+#
+# This view uses Turbo Frames for progressive enhancement
+# Future widget areas are prepared for dynamic content updates
+%>
+
 <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 50;">
   <div style="background: rgba(244, 241, 222, 0.9); padding: 40px; border-radius: 10px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); font-family: 'Patrick Hand', cursive; max-width: 400px; width: 100%;">
-    <h2 style="font-size: 1.8em; color: #006D77; margin: 0 0 20px 0; text-align: center;">welcome back, <%= current_user.full_name.split(' ').first %>!</h2>
-    <p style="font-size: 1.1em; color: #2B2D42; text-align: center;">your campaign dashboard awaits...</p>
+    <%# Welcome section %>
+    <h2 style="font-size: 1.8em; color: #006D77; margin: 0 0 20px 0; text-align: center;">Welcome back, <%= current_user.full_name.split(' ').first %>!</h2>
+
+    <%# User stats widget - prepared for Turbo Frame updates %>
+    <div id="user-stats" style="margin-top: 30px;">
+      <h3 style="font-size: 1.2em; color: #2B2D42; margin: 0 0 15px 0;">Your Stats</h3>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px;">
+        <div style="background: rgba(0, 109, 119, 0.2); padding: 20px; border-radius: 8px;">
+          <p style="margin: 0; font-size: 0.9em; color: #F4F1DE;">Campaigns joined</p>
+          <p style="margin: 5px 0 0 0; font-size: 1.8em; color: #006D77; font-weight: bold;">0</p>
+        </div>
+        <div style="background: rgba(0, 109, 119, 0.2); padding: 20px; border-radius: 8px;">
+          <p style="margin: 0; font-size: 0.9em; color: #F4F1DE;">Applications pending</p>
+          <p style="margin: 5px 0 0 0; font-size: 1.8em; color: #006D77; font-weight: bold;">0</p>
+        </div>
+        <div style="background: rgba(0, 109, 119, 0.2); padding: 20px; border-radius: 8px;">
+          <p style="margin: 0; font-size: 0.9em; color: #F4F1DE;">Sessions played</p>
+          <p style="margin: 5px 0 0 0; font-size: 1.8em; color: #006D77; font-weight: bold;">0</p>
+        </div>
+      </div>
+    </div>
+
+    <%# Quick actions widget - prepared for Turbo Frame updates %>
+    <div id="quick-actions" style="margin-top: 30px;">
+      <h3 style="font-size: 1.2em; color: #2B2D42; margin: 0 0 15px 0;">Quick Actions</h3>
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
+        <p style="font-size: 0.9em; color: #F4F1DE; font-style: italic; opacity: 0.7;">More features coming soon...</p>
+      </div>
+    </div>
+
+    <%# Recent activity widget - prepared for Turbo Stream updates %>
+    <div id="recent-activity" style="margin-top: 30px;">
+      <h3 style="font-size: 1.2em; color: #2B2D42; margin: 0 0 15px 0;">Recent Activity</h3>
+      <div style="background: rgba(0, 109, 119, 0.2); padding: 20px; border-radius: 8px; margin-top: 20px;">
+        <p style="margin: 0; font-size: 0.9em; color: #F4F1DE; text-align: center;">No recent activity</p>
+      </div>
+    </div>
   </div>
 </div>
