@@ -1,0 +1,20 @@
+<div class="mt-6 pt-4 border-t border-slate-800">
+  <div class="flex items-center justify-between mb-3">
+    <h4 class="text-[9px] font-black uppercase text-slate-400">Players</h4>
+    <% if campaign.players.exists?(current_user&.id) %>
+      <%= button_to "Leave",
+        leave_campaign_path(campaign),
+        method: :delete,
+        class: "text-[8px] font-black uppercase text-slate-400 hover:text-white" %>
+    <% else %>
+      <%= button_to "Join",
+        join_campaign_path(campaign),
+        method: :post,
+        class: "text-[8px] font-black uppercase text-indigo-400 hover:text-white" %>
+    <% end %>
+  </div>
+
+  <div id="campaign_members_<%= campaign.id %>">
+    <%= render "campaigns/members", campaign: campaign %>
+  </div>
+</div>

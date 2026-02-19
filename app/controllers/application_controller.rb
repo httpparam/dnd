@@ -11,10 +11,13 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user
-    return @current_user if defined?(@current_user)
     return nil unless session[:user_id]
 
-    @current_user = User.find_by(id: session[:user_id])
+    user = User.find_by(id: session[:user_id])
+    return user if user.is_a?(User)
+
+    reset_session
+    nil
   end
 
   def logged_in?

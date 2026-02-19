@@ -1,0 +1,22 @@
+<div class="mt-6 pt-4 border-t border-slate-800" data-controller="campaign-chat">
+  <h4 class="text-[9px] font-black uppercase text-slate-400 mb-3">Table Chat</h4>
+  <div
+    id="campaign_chat_<%= campaign.id %>"
+    class="space-y-2 max-h-40 overflow-y-auto pr-2"
+    data-campaign-chat-target="list"
+  >
+    <%= render partial: "campaigns/message", collection: campaign.chat_messages.order(created_at: :asc).last(20), as: :message %>
+  </div>
+
+  <%= form_with model: CampaignMessage.new,
+    url: campaign_campaign_messages_path(campaign),
+    class: "mt-3 flex gap-2",
+    data: { action: "turbo:submit-end->campaign-chat#clear" } do |f| %>
+    <%= f.text_field :body,
+      placeholder: "Send a message...",
+      data: { "campaign-chat-target": "input" },
+      class: "flex-1 bg-slate-950 border border-slate-800 text-slate-200 text-[10px] p-2 uppercase font-bold" %>
+    <%= f.submit "Send",
+      class: "bg-indigo-600 text-[10px] font-black px-4 border-b-4 border-indigo-900 active:border-b-0 active:translate-y-1 uppercase" %>
+  <% end %>
+</div>

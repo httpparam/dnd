@@ -3,12 +3,20 @@ class Campaign < ApplicationRecord
   has_many :memberships, class_name: "CampaignMembership", dependent: :destroy
   has_many :players, through: :memberships, source: :user
   has_many :chat_messages, class_name: "CampaignMessage", dependent: :destroy
+  has_many :join_requests, class_name: "CampaignJoinRequest", dependent: :destroy
 
   validates :title, presence: true
 
   broadcasts_to :campaigns, inserts_by: :prepend
 
   after_commit :notify_users_for_campaign, on: %i[create update]
+
+  def member?(user)
+    return false if user.nil?
+    return true if dm_id == user.id
+
+    players.exists?(user.id)
+  end
 
   private
 

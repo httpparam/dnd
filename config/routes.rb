@@ -19,12 +19,15 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:update]
   get "/onboarding", to: "onboarding#index"
-  resources :campaigns, only: [:create] do
-    member do
-      post :join
-      delete :leave
-    end
+  resources :campaigns, only: [:create, :show, :destroy] do
     resources :campaign_messages, only: [:create]
+    resources :campaign_memberships, only: [:destroy]
+    resources :campaign_join_requests, only: [:create, :destroy] do
+      member do
+        post :approve
+        post :deny
+      end
+    end
   end
   resource :queue, only: [:create, :destroy]
 end

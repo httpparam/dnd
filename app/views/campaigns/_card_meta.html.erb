@@ -1,0 +1,10 @@
+<div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-800">
+  <div class="flex items-center gap-2 text-[9px] text-slate-400 font-bold uppercase">
+    <%= lucide_icon "clock", width: 12, height: 12, class: "text-indigo-500" %>
+    <%= campaign.start_time.presence || "TBD" %>
+  </div>
+  <div class="flex items-center gap-2 text-[9px] text-slate-400 font-bold uppercase">
+    <%= lucide_icon "users", width: 12, height: 12, class: "text-indigo-500" %>
+    <%= campaign.players_count %> Joined
+  </div>
+</div>

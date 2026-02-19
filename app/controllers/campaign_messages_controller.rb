@@ -3,8 +3,13 @@ class CampaignMessagesController < ApplicationController
 
   def create
     campaign = Campaign.find(params[:campaign_id])
+    unless campaign.member?(current_user)
+      redirect_to campaign_path(campaign), alert: "Join the campaign to chat."
+      return
+    end
+
     campaign.chat_messages.create!(user: current_user, body: message_params[:body])
-    redirect_to root_path
+    redirect_to campaign_path(campaign)
   end
 
   private

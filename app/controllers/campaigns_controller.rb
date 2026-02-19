@@ -1,12 +1,25 @@
 class CampaignsController < ApplicationController
   before_action :require_login
 
+  def show
+    @campaign = Campaign.includes(:dm, :players, :chat_messages, join_requests: :user).find_by(id: params[:id])
+    return if @campaign
+
+    redirect_to root_path, alert: "Campaign not found.", status: :see_other
+  end
+
   def create
     Rails.logger.info("current_user class: #{current_user.class}")
     Rails.logger.info("current_user id: #{current_user.id}")
     Rails.logger.info("session[:user_id]: #{session[:user_id]}")
 
-    campaign = current_user.campaigns.build(campaign_params)
+    unless current_user.is_a?(User)
+      reset_session
+      redirect_to root_path, alert: "Session error. Please log in again."
+      return
+    end
+
+    campaign = Campaign.new(campaign_params.merge(dm_id: current_user.id))
 
     if campaign.save
       redirect_to root_path, notice: "Campaign created!"
@@ -17,16 +30,15 @@ class CampaignsController < ApplicationController
     end
   end
 
-  def join
+  def destroy
     campaign = Campaign.find(params[:id])
-    campaign.memberships.create!(user: current_user)
-    redirect_to root_path, notice: "Joined campaign."
-  end
+    unless campaign.dm_id == current_user.id
+      redirect_to campaign_path(campaign), alert: "Only the DM can delete this campaign.", status: :see_other
+      return
+    end
 
-  def leave
-    campaign = Campaign.find(params[:id])
-    campaign.memberships.where(user: current_user).destroy_all
-    redirect_to root_path, notice: "Left campaign."
+    campaign.destroy
+    redirect_to root_path, notice: "Campaign deleted.", status: :see_other
   end
 
   private

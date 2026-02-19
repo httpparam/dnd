@@ -1,0 +1,12 @@
+<div class="flex flex-wrap gap-2 mb-6">
+  <% campaign.needs.each do |need| %>
+    <span class="bg-red-950/30 text-red-400 border border-red-900/50 text-[8px] px-2 py-1 font-bold uppercase">
+      Looking for: <%= need %>
+    </span>
+  <% end %>
+  <% if campaign.atmosphere.present? %>
+    <span class="bg-indigo-950/30 text-indigo-400 border border-indigo-900/50 text-[8px] px-2 py-1 font-bold uppercase">
+      Atmosphere: <%= campaign.atmosphere %>
+    </span>
+  <% end %>
+</div>

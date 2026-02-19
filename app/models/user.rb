@@ -1,5 +1,8 @@
 class User < ApplicationRecord
   has_many :campaigns, foreign_key: :dm_id, dependent: :nullify
+  has_many :campaign_memberships, dependent: :destroy
+  has_many :joined_campaigns, through: :campaign_memberships, source: :campaign
+  has_many :campaign_join_requests, dependent: :destroy
 
   validates :hackclub_id, presence: true, uniqueness: true
 

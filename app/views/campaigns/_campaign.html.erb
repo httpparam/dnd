@@ -1,75 +1,16 @@
 <div class="bg-slate-900 border-4 border-slate-800 p-6 relative group hover:border-indigo-500 transition-colors">
   <%= turbo_stream_from [campaign, :members] %>
   <%= turbo_stream_from [campaign, :chat] %>
-  <div class="flex justify-between items-start mb-4">
-    <div>
-      <h3 class="text-sm font-black text-white uppercase mb-1"><%= campaign.title %></h3>
-      <p class="text-[10px] text-slate-500 uppercase font-bold">DM: <%= campaign.dm&.name || "Pending..." %></p>
-    </div>
-    <span class="text-[8px] px-2 py-1 font-black uppercase border <%= campaign.status == "Accepting" ? "border-emerald-500 text-emerald-500" : "border-amber-500 text-amber-500" %>">
-      <%= campaign.status %>
-    </span>
-  </div>
 
-  <div class="flex flex-wrap gap-2 mb-6">
-    <% campaign.needs.each do |need| %>
-      <span class="bg-red-950/30 text-red-400 border border-red-900/50 text-[8px] px-2 py-1 font-bold uppercase">
-        Looking for: <%= need %>
-      </span>
-    <% end %>
-    <% if campaign.atmosphere.present? %>
-      <span class="bg-indigo-950/30 text-indigo-400 border border-indigo-900/50 text-[8px] px-2 py-1 font-bold uppercase">
-        Atmosphere: <%= campaign.atmosphere %>
-      </span>
-    <% end %>
-  </div>
-
-  <div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-800">
-    <div class="flex items-center gap-2 text-[9px] text-slate-400 font-bold uppercase">
-      <%= lucide_icon "clock", width: 12, height: 12, class: "text-indigo-500" %>
-      <%= campaign.start_time.presence || "TBD" %>
+  <%= render "campaigns/card_header", campaign: campaign %>
+  <%= render "campaigns/card_tags", campaign: campaign %>
+  <%= render "campaigns/card_meta", campaign: campaign %>
+  <div class="mt-6 pt-4 border-t border-slate-800 flex justify-between items-center">
+    <div class="text-[9px] font-black uppercase text-slate-400">
+      View details to request access
     </div>
-    <div class="flex items-center gap-2 text-[9px] text-slate-400 font-bold uppercase">
-      <%= lucide_icon "users", width: 12, height: 12, class: "text-indigo-500" %>
-      <%= campaign.players_count %> Joined
-    </div>
-  </div>
-
-  <div class="mt-6 pt-4 border-t border-slate-800">
-    <div class="flex items-center justify-between mb-3">
-      <h4 class="text-[9px] font-black uppercase text-slate-400">Players</h4>
-      <% if campaign.players.exists?(current_user&.id) %>
-        <%= button_to "Leave",
-          leave_campaign_path(campaign),
-          method: :delete,
-          class: "text-[8px] font-black uppercase text-slate-400 hover:text-white" %>
-      <% else %>
-        <%= button_to "Join",
-          join_campaign_path(campaign),
-          method: :post,
-          class: "text-[8px] font-black uppercase text-indigo-400 hover:text-white" %>
-      <% end %>
-    </div>
-
-    <div id="campaign_members_<%= campaign.id %>">
-      <%= render "campaigns/members", campaign: campaign %>
-    </div>
-  </div>
-
-  <div class="mt-6 pt-4 border-t border-slate-800">
-    <h4 class="text-[9px] font-black uppercase text-slate-400 mb-3">Table Chat</h4>
-    <div id="campaign_chat_<%= campaign.id %>" class="space-y-2 max-h-40 overflow-y-auto pr-2">
-      <%= render partial: "campaigns/message", collection: campaign.chat_messages.order(created_at: :asc).last(20), as: :message %>
-    </div>
-
-    <%= form_with model: CampaignMessage.new,
-      url: campaign_campaign_messages_path(campaign),
-      class: "mt-3 flex gap-2" do |f| %>
-      <%= f.text_field :body,
-        placeholder: "Send a message...",
-        class: "flex-1 bg-slate-950 border border-slate-800 text-slate-200 text-[10px] p-2 uppercase font-bold" %>
-      <%= f.submit "Send",
-        class: "bg-indigo-600 text-[10px] font-black px-4 border-b-4 border-indigo-900 active:border-b-0 active:translate-y-1 uppercase" %>
-    <% end %>
+    <%= link_to "View Campaign",
+      campaign_path(campaign),
+      class: "text-[8px] font-black uppercase text-indigo-400 hover:text-white" %>
   </div>
 </div>
