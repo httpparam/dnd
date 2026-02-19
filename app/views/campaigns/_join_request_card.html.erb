@@ -1,0 +1,29 @@
+<h3 class="text-[10px] font-black uppercase text-slate-400 mb-4">Join Request</h3>
+<% join_request = campaign_join_request_for(campaign, current_user) %>
+<% join_state = campaign.member?(current_user) ? :member : join_request&.status&.to_sym || :none %>
+
+<% if join_state == :member %>
+  <div class="flex items-center justify-between">
+    <div class="text-[9px] text-emerald-400 uppercase font-bold">You are a member.</div>
+    <% if show_leave_campaign_button?(campaign, current_user) %>
+      <% membership = campaign_membership_for(campaign, current_user) %>
+      <%= button_to "Leave Campaign",
+        campaign_campaign_membership_path(campaign, membership),
+        method: :delete,
+        class: "text-[8px] font-black uppercase text-slate-400 hover:text-white" %>
+    <% end %>
+  </div>
+<% elsif join_state == :pending %>
+  <div class="text-[9px] text-amber-400 uppercase font-bold mb-3">Request pending.</div>
+  <%= button_to "Withdraw Request",
+    campaign_campaign_join_request_path(campaign, join_request),
+    method: :delete,
+    class: "text-[8px] font-black uppercase text-slate-400 hover:text-white" %>
+<% elsif join_state == :denied %>
+  <div class="text-[9px] text-red-400 uppercase font-bold">Request denied.</div>
+<% else %>
+  <%= button_to "Request to Join",
+    campaign_campaign_join_requests_path(campaign),
+    method: :post,
+    class: "bg-indigo-600 text-[10px] font-black px-4 py-3 border-b-4 border-indigo-900 active:border-b-0 active:translate-y-1 uppercase" %>
+<% end %>

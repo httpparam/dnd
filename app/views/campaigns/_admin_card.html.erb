@@ -1,0 +1,50 @@
+<% pending_requests = pending_join_requests_for(campaign) %>
+<% membership_map = campaign_membership_map(campaign) %>
+
+<div class="flex items-center justify-between mb-4">
+  <h3 class="text-[10px] font-black uppercase text-slate-400">Campaign Admin</h3>
+  <%= button_to "Delete Campaign",
+    campaign_path(campaign),
+    method: :delete,
+    data: { turbo_confirm: "Delete this campaign? This cannot be undone." },
+    class: "text-[8px] font-black uppercase text-red-400 hover:text-white" %>
+</div>
+
+<h3 class="text-[10px] font-black uppercase text-slate-400 mb-4">Pending Requests</h3>
+<% if pending_requests.empty? %>
+  <div class="text-[9px] text-slate-500 uppercase font-bold">No pending requests.</div>
+<% end %>
+
+<div class="space-y-3">
+  <% pending_requests.each do |join_request| %>
+    <div class="flex items-center justify-between">
+      <span class="text-[9px] font-black uppercase text-slate-300"><%= fallback_player_name(join_request.user) %></span>
+      <div class="flex gap-2">
+        <%= button_to "Approve",
+          approve_campaign_campaign_join_request_path(campaign, join_request),
+          method: :post,
+          class: "text-[8px] font-black uppercase text-emerald-400 hover:text-white" %>
+        <%= button_to "Deny",
+          deny_campaign_campaign_join_request_path(campaign, join_request),
+          method: :post,
+          class: "text-[8px] font-black uppercase text-red-400 hover:text-white" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="mt-6 pt-4 border-t border-slate-800">
+  <h4 class="text-[9px] font-black uppercase text-slate-400 mb-3">Kick Members</h4>
+  <% campaign.players.each do |player| %>
+    <% membership = membership_map[player.id] %>
+    <% next if membership.nil? %>
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-[9px] font-black uppercase text-slate-300"><%= fallback_player_name(player) %></span>
+      <%= button_to "Kick",
+        campaign_campaign_membership_path(campaign, membership),
+        method: :delete,
+        data: { turbo_confirm: "Kick this member?" },
+        class: "text-[8px] font-black uppercase text-red-400 hover:text-white" %>
+    </div>
+  <% end %>
+</div>

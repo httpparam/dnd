@@ -1,9 +1,9 @@
 <div class="flex justify-between items-start mb-4">
   <div>
     <h3 class="text-sm font-black text-white uppercase mb-1"><%= campaign.title %></h3>
-    <p class="text-[10px] text-slate-500 uppercase font-bold">DM: <%= campaign.dm&.name || "Pending..." %></p>
+    <p class="text-[10px] text-slate-500 uppercase font-bold">DM: <%= campaign_dm_name(campaign) %></p>
   </div>
-  <span class="text-[8px] px-2 py-1 font-black uppercase border <%= campaign.status == "Accepting" ? "border-emerald-500 text-emerald-500" : "border-amber-500 text-amber-500" %>">
+  <span class="text-[8px] px-2 py-1 font-black uppercase border <%= campaign_status_badge_classes(campaign) %>">
     <%= campaign.status %>
   </span>
 </div>

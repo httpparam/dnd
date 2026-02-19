@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between mb-8">
       <div>
         <h1 class="text-2xl font-black uppercase text-white"><%= @campaign.title %></h1>
-        <p class="text-[10px] text-slate-500 uppercase font-bold mt-1">DM: <%= @campaign.dm&.name || "Pending..." %></p>
+        <p class="text-[10px] text-slate-500 uppercase font-bold mt-1">DM: <%= campaign_dm_name(@campaign) %></p>
       </div>
       <%= link_to "Back to Dashboard", root_path, class: "text-[9px] font-black uppercase text-slate-400 hover:text-white" %>
     </div>
@@ -17,7 +17,7 @@
 
         <div class="bg-slate-900 border-4 border-slate-800 p-6">
           <h3 class="text-[10px] font-black uppercase text-slate-400 mb-4">Table Chat</h3>
-          <% if @campaign.member?(current_user) %>
+          <% if campaign_join_state(@campaign, current_user) == :member %>
             <%= turbo_stream_from [@campaign, :chat] %>
             <%= render "campaigns/card_chat", campaign: @campaign %>
           <% else %>
@@ -38,84 +38,12 @@
         </div>
 
         <div class="bg-slate-900 border-4 border-slate-800 p-6">
-          <h3 class="text-[10px] font-black uppercase text-slate-400 mb-4">Join Request</h3>
-          <% if @campaign.member?(current_user) %>
-            <div class="flex items-center justify-between">
-              <div class="text-[9px] text-emerald-400 uppercase font-bold">You are a member.</div>
-              <% if @campaign.dm_id != current_user.id %>
-                <% membership = @campaign.memberships.find_by(user: current_user) %>
-                <%= button_to "Leave Campaign",
-                  campaign_campaign_membership_path(@campaign, membership),
-                  method: :delete,
-                  class: "text-[8px] font-black uppercase text-slate-400 hover:text-white" %>
-              <% end %>
-            </div>
-          <% else %>
-            <% request = @campaign.join_requests.find_by(user: current_user) %>
-            <% if request&.status == "pending" %>
-              <div class="text-[9px] text-amber-400 uppercase font-bold mb-3">Request pending.</div>
-              <%= button_to "Withdraw Request",
-                campaign_campaign_join_request_path(@campaign, request),
-                method: :delete,
-                class: "text-[8px] font-black uppercase text-slate-400 hover:text-white" %>
-            <% elsif request&.status == "denied" %>
-              <div class="text-[9px] text-red-400 uppercase font-bold">Request denied.</div>
-            <% else %>
-              <%= button_to "Request to Join",
-                campaign_campaign_join_requests_path(@campaign),
-                method: :post,
-                class: "bg-indigo-600 text-[10px] font-black px-4 py-3 border-b-4 border-indigo-900 active:border-b-0 active:translate-y-1 uppercase" %>
-            <% end %>
-          <% end %>
+          <%= render "campaigns/join_request_card", campaign: @campaign, current_user: current_user %>
         </div>
 
-        <% if @campaign.dm_id == current_user.id %>
+        <% if dm_for_campaign?(@campaign, current_user) %>
           <div class="bg-slate-900 border-4 border-slate-800 p-6">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-[10px] font-black uppercase text-slate-400">Campaign Admin</h3>
-              <%= button_to "Delete Campaign",
-                campaign_path(@campaign),
-                method: :delete,
-                data: { turbo_confirm: "Delete this campaign? This cannot be undone." },
-                class: "text-[8px] font-black uppercase text-red-400 hover:text-white" %>
-            </div>
-            <h3 class="text-[10px] font-black uppercase text-slate-400 mb-4">Pending Requests</h3>
-            <% pending = @campaign.join_requests.pending.includes(:user) %>
-            <% if pending.empty? %>
-              <div class="text-[9px] text-slate-500 uppercase font-bold">No pending requests.</div>
-            <% end %>
-            <div class="space-y-3">
-              <% pending.each do |req| %>
-                <div class="flex items-center justify-between">
-                  <span class="text-[9px] font-black uppercase text-slate-300"><%= req.user.name || "Adventurer" %></span>
-                  <div class="flex gap-2">
-                    <%= button_to "Approve",
-                      approve_campaign_campaign_join_request_path(@campaign, req),
-                      method: :post,
-                      class: "text-[8px] font-black uppercase text-emerald-400 hover:text-white" %>
-                    <%= button_to "Deny",
-                      deny_campaign_campaign_join_request_path(@campaign, req),
-                      method: :post,
-                      class: "text-[8px] font-black uppercase text-red-400 hover:text-white" %>
-                  </div>
-                </div>
-              <% end %>
-            </div>
-
-            <div class="mt-6 pt-4 border-t border-slate-800">
-              <h4 class="text-[9px] font-black uppercase text-slate-400 mb-3">Kick Members</h4>
-              <% @campaign.players.each do |player| %>
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-[9px] font-black uppercase text-slate-300"><%= player.name || "Adventurer" %></span>
-                  <% membership = @campaign.memberships.find_by(user: player) %>
-                  <%= button_to "Kick",
-                    campaign_campaign_membership_path(@campaign, membership),
-                    method: :delete,
-                    data: { turbo_confirm: "Kick this member?" },
-                    class: "text-[8px] font-black uppercase text-red-400 hover:text-white" %>
-                </div>
-              <% end %>
-            </div>
+            <%= render "campaigns/admin_card", campaign: @campaign %>
           </div>
         <% end %>
       </aside>
