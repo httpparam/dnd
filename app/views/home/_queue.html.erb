@@ -1,0 +1,14 @@
+<% if user.queued_for_matching? %>
+  <div class="text-right">
+    <p class="text-[9px] text-emerald-400 font-black uppercase mb-2">In Queue</p>
+    <%= button_to "Leave Queue",
+      queue_path,
+      method: :delete,
+      class: "whitespace-nowrap bg-slate-800 px-6 py-4 text-[10px] font-black border-b-4 border-slate-950 active:border-0 uppercase" %>
+  </div>
+<% else %>
+  <%= button_to "Join Queue",
+    queue_path,
+    method: :post,
+    class: "whitespace-nowrap bg-indigo-600 px-6 py-4 text-[10px] font-black border-b-4 border-indigo-900 active:border-0 uppercase" %>
+<% end %>

@@ -24,12 +24,47 @@ class SessionsController < ApplicationController
 
     token = exchange_code_for_token(params[:code])
     profile = fetch_user_profile(token)
-    identity = profile["identity"] || {}
 
-    user = User.find_or_initialize_by(hackclub_id: identity["id"].to_s)
-    user.name = identity["name"] || profile["name"] || profile["display_name"]
-    user.email = identity["email"] || profile["email"]
-    user.avatar_url = identity["avatar"] || identity["avatar_url"] || profile["avatar"] || profile["avatar_url"]
+    Rails.logger.info("Hack Club Profile response: #{profile.inspect}")
+
+    # The profile can have different structures:
+    # 1. {identity: {id, primary_email, first_name, last_name, slack_id}}
+    # 2. {id, email, name}
+    user_data = profile["identity"] || profile
+    hackclub_id = (user_data["id"] || user_data["slack_id"] || profile["slack_id"]).to_s
+
+    Rails.logger.info("Extracted: hackclub_id=#{hackclub_id}, user_data keys=#{user_data.keys.inspect}")
+
+    user = User.find_or_initialize_by(hackclub_id: hackclub_id)
+
+    # Try multiple possible fields for name (Hack Club uses first_name + last_name)
+    user.name ||= if user_data["first_name"] || user_data["last_name"]
+                    [user_data["first_name"], user_data["last_name"]].compact.join(" ")
+                  else
+                    user_data["name"] ||
+                    user_data["username"] ||
+                    user_data["display_name"] ||
+                    profile["name"] ||
+                    profile["username"] ||
+                    profile["display_name"]
+                  end
+
+    # Try multiple possible fields for email (Hack Club uses primary_email)
+    user.email ||= user_data["primary_email"] ||
+                   user_data["email"] ||
+                   profile["primary_email"] ||
+                   profile["email"]
+
+    # Try multiple possible fields for avatar
+    user.avatar_url ||= user_data["avatar"] ||
+                        user_data["avatar_url"] ||
+                        user_data["profile_picture"] ||
+                        profile["avatar"] ||
+                        profile["avatar_url"] ||
+                        profile["profile_picture"]
+
+    Rails.logger.info("Saving user: hackclub_id=#{user.hackclub_id}, name=#{user.name.inspect}, email=#{user.email.inspect}")
+
     user.save!
 
     session[:user_id] = user.id
@@ -38,6 +73,7 @@ class SessionsController < ApplicationController
     redirect_to root_path
   rescue StandardError => e
     Rails.logger.error("Hack Club auth failed: #{e.class} #{e.message}")
+    Rails.logger.error(e.backtrace.first(10).join("\n"))
     redirect_to root_path, alert: "Login failed. Please try again."
   end
 

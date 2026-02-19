@@ -1,0 +1,15 @@
+Hey <%= @user.name.presence || "adventurer" %>,
+
+<% if @reason == "match" %>
+A new campaign matches your preferences.
+<% else %>
+A new campaign is now live.
+<% end %>
+
+<%= @campaign.title %>
+Status: <%= @campaign.status %>
+Atmosphere: <%= @campaign.atmosphere.presence || "TBD" %>
+Start time: <%= @campaign.start_time.presence || "TBD" %>
+Needs: <%= @campaign.needs.presence&.join(", ") || "TBD" %>
+
+Check QuestBoard to join or invite others.

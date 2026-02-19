@@ -1,0 +1,17 @@
+<div class="flex flex-wrap gap-2">
+  <% if campaign.players.empty? %>
+    <span class="text-[8px] uppercase font-bold text-slate-500">No players yet.</span>
+  <% end %>
+  <% campaign.players.each do |player| %>
+    <div class="flex items-center gap-2 bg-slate-950 border border-slate-800 px-2 py-1">
+      <div class="w-5 h-5 bg-slate-800 border border-slate-700 flex items-center justify-center overflow-hidden">
+        <% if player.avatar_url.present? %>
+          <img src="<%= player.avatar_url %>" alt="<%= player.name %>" class="w-full h-full object-cover" />
+        <% else %>
+          <%= lucide_icon "user", width: 10, height: 10, class: "text-slate-600" %>
+        <% end %>
+      </div>
+      <span class="text-[8px] font-black uppercase text-slate-300"><%= player.name || "Adventurer" %></span>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,21 @@
+<h1>New Campaign Alert</h1>
+
+<p>Hey <%= @user.name.presence || "adventurer" %>,</p>
+
+<p>
+  <% if @reason == "match" %>
+    A new campaign matches your preferences.
+  <% else %>
+    A new campaign is now live.
+  <% end %>
+</p>
+
+<p>
+  <strong><%= @campaign.title %></strong><br />
+  Status: <%= @campaign.status %><br />
+  Atmosphere: <%= @campaign.atmosphere.presence || "TBD" %><br />
+  Start time: <%= @campaign.start_time.presence || "TBD" %><br />
+  Needs: <%= @campaign.needs.presence&.join(", ") || "TBD" %>
+</p>
+
+<p>Check QuestBoard to join or invite others.</p>

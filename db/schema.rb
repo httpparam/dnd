@@ -10,9 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_19_000210) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_19_000320) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "campaign_memberships", force: :cascade do |t|
+    t.bigint "campaign_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["campaign_id", "user_id"], name: "index_campaign_memberships_on_campaign_id_and_user_id", unique: true
+    t.index ["campaign_id"], name: "index_campaign_memberships_on_campaign_id"
+    t.index ["user_id"], name: "index_campaign_memberships_on_user_id"
+  end
+
+  create_table "campaign_messages", force: :cascade do |t|
+    t.text "body", null: false
+    t.bigint "campaign_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["campaign_id"], name: "index_campaign_messages_on_campaign_id"
+    t.index ["user_id"], name: "index_campaign_messages_on_user_id"
+  end
 
   create_table "campaigns", force: :cascade do |t|
     t.string "atmosphere"
@@ -48,11 +68,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_19_000210) do
     t.string "experience_level"
     t.string "hackclub_id", null: false
     t.string "name"
+    t.datetime "queued_at"
+    t.boolean "queued_for_matching", default: false, null: false
     t.string "roles", default: [], array: true
     t.string "styles", default: [], array: true
     t.datetime "updated_at", null: false
     t.index ["hackclub_id"], name: "index_users_on_hackclub_id", unique: true
   end
 
+  add_foreign_key "campaign_memberships", "campaigns"
+  add_foreign_key "campaign_memberships", "users"
+  add_foreign_key "campaign_messages", "campaigns"
+  add_foreign_key "campaign_messages", "users"
   add_foreign_key "campaigns", "users", column: "dm_id"
 end
