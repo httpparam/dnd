@@ -1,0 +1,35 @@
+<div class="bg-slate-900 border-4 border-slate-800 p-6 relative group hover:border-indigo-500 transition-colors">
+  <div class="flex justify-between items-start mb-4">
+    <div>
+      <h3 class="text-sm font-black text-white uppercase mb-1"><%= campaign.title %></h3>
+      <p class="text-[10px] text-slate-500 uppercase font-bold">DM: <%= campaign.dm&.name || "Pending..." %></p>
+    </div>
+    <span class="text-[8px] px-2 py-1 font-black uppercase border <%= campaign.status == "Accepting" ? "border-emerald-500 text-emerald-500" : "border-amber-500 text-amber-500" %>">
+      <%= campaign.status %>
+    </span>
+  </div>
+
+  <div class="flex flex-wrap gap-2 mb-6">
+    <% campaign.needs.each do |need| %>
+      <span class="bg-red-950/30 text-red-400 border border-red-900/50 text-[8px] px-2 py-1 font-bold uppercase">
+        Looking for: <%= need %>
+      </span>
+    <% end %>
+    <% if campaign.atmosphere.present? %>
+      <span class="bg-indigo-950/30 text-indigo-400 border border-indigo-900/50 text-[8px] px-2 py-1 font-bold uppercase">
+        Atmosphere: <%= campaign.atmosphere %>
+      </span>
+    <% end %>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-800">
+    <div class="flex items-center gap-2 text-[9px] text-slate-400 font-bold uppercase">
+      <%= lucide_icon "clock", width: 12, height: 12, class: "text-indigo-500" %>
+      <%= campaign.start_time.presence || "TBD" %>
+    </div>
+    <div class="flex items-center gap-2 text-[9px] text-slate-400 font-bold uppercase">
+      <%= lucide_icon "users", width: 12, height: 12, class: "text-indigo-500" %>
+      <%= campaign.players_count %> Joined
+    </div>
+  </div>
+</div>

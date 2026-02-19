@@ -1,0 +1,35 @@
+<div id="matching_suggestions" class="space-y-4">
+  <h3 class="text-[10px] font-black text-white uppercase tracking-[0.2em] mb-4">Suggested Party Members</h3>
+
+  <% if suggested_users.empty? %>
+    <div class="bg-slate-900 border-2 border-slate-800 p-4 text-[9px] text-slate-500 uppercase font-bold">
+      No suggestions yet. Update your profile to get matched.
+    </div>
+  <% end %>
+
+  <% suggested_users.each do |user| %>
+    <div class="bg-slate-900 border-2 border-slate-800 p-4 flex items-center justify-between group hover:border-indigo-500">
+      <div class="flex items-center gap-4">
+        <div class="w-10 h-10 bg-slate-800 border border-slate-700 flex items-center justify-center overflow-hidden">
+          <% if user.avatar_url.present? %>
+            <img src="<%= user.avatar_url %>" alt="<%= user.name %>" class="w-full h-full object-cover" />
+          <% else %>
+            <%= lucide_icon "user", width: 20, height: 20, class: "text-slate-600 group-hover:text-indigo-500" %>
+          <% end %>
+        </div>
+        <div>
+          <p class="text-[10px] font-black text-white uppercase"><%= user.name || "Adventurer" %></p>
+          <div class="flex gap-2 mt-1">
+            <% user.styles.first(2).each do |style| %>
+              <span class="text-[7px] text-indigo-400 font-bold uppercase"><%= style %></span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="text-right">
+        <p class="text-[8px] font-black text-slate-500 uppercase mb-1"><%= user.experience_level.presence || "Experience TBD" %></p>
+        <button class="text-[8px] font-black text-indigo-500 hover:text-white uppercase">Invite to Table</button>
+      </div>
+    </div>
+  <% end %>
+</div>

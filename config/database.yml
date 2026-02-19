@@ -1,0 +1,35 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  url: <%= ENV["DATABASE_URL"] %>
+
+development:
+  primary:
+    <<: *default
+    database: data
+  cable:
+    <<: *default
+    database: data
+    migrations_paths: db/cable_migrate
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  primary:
+    <<: *default
+    database: data_test
+  cable:
+    <<: *default
+    database: data_test
+    migrations_paths: db/cable_migrate
+
+production:
+  primary:
+    <<: *default
+    database: data
+  cable:
+    <<: *default
+    database: data
+    migrations_paths: db/cable_migrate
